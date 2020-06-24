@@ -223,13 +223,14 @@ def getDataFromJSON(file_number, config, mode):  # 从JSON返回元数据
     # ======================================处理得到的信息
     title = json_data['title']
     number = json_data['number']
-    actor_list = str(json_data['actor']).strip("[ ]").replace("'", '').split(',')  # 字符串转列表
     release = json_data['release']
     try:
         cover_small = json_data['cover_small']
     except:
         cover_small = ''
-    tag = str(json_data['tag']).strip("[ ]").replace("'", '').replace(" ", '').split(',')  # 字符串转列表 @
+    tag_list = str(json_data['tag']).strip("[ ]").replace("'", '').replace(" ", '').split(',')  # 字符串转列表
+    tag = str(tag_list).strip("[ ]").replace("'", '').replace(" ", '')
+    actor_list = str(json_data['actor']).strip("[ ]").replace("'", '').split(',')  # 字符串转列表
     actor = str(actor_list).strip("[ ]").replace("'", '').replace(" ", '')
     if actor == '':
         actor = 'Unknown'
@@ -267,6 +268,7 @@ def getDataFromJSON(file_number, config, mode):  # 从JSON返回元数据
     json_data['release'] = release
     json_data['cover_small'] = cover_small
     json_data['tag'] = tag
+    json_data['tag_list'] = tag_list
     json_data['naming_media'] = naming_media
     json_data['naming_file'] = naming_file
     json_data['folder_name'] = folder_name
@@ -289,11 +291,12 @@ def get_info(json_data):
     actor = json_data['actor']
     release = json_data['release']
     tag = json_data['tag']
+    tag_list = json_data['tag_list']
     number = json_data['number']
     cover = json_data['cover']
     website = json_data['website']
     series = json_data['series']
-    return title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, number, cover, website, series
+    return title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, tag_list, number, cover, website, series
 
 
 # ========================================================================保存配置到config.ini

@@ -933,7 +933,7 @@ class MyMAinWindow(QMainWindow, Ui_AVDV):
 
     # ========================================================================自定义文件名
     def get_naming_rule(self, json_data):
-        title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, number, cover, website, series = get_info(
+        title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, tag_list, number, cover, website, series = get_info(
             json_data)
         if len(actor.split(',')) >= 10:  # 演员过多取前五个
             actor = actor.split(',')[0] + ',' + actor.split(',')[1] + ',' + actor.split(',')[2] + '等演员'
@@ -1097,7 +1097,7 @@ class MyMAinWindow(QMainWindow, Ui_AVDV):
 
     # ========================================================================打印NFO
     def PrintFiles(self, path, name_file, cn_sub, leak, json_data, filepath, failed_folder):
-        title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, number, cover, website, series = get_info(
+        title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, tag_list, number, cover, website, series = get_info(
             json_data)
         name_media = json_data['naming_media'].replace('title', title).replace('studio', studio).replace('year',
                                                                                                          year).replace(
@@ -1154,7 +1154,7 @@ class MyMAinWindow(QMainWindow, Ui_AVDV):
                 print("  <label>", file=code)
                 print("  </label>", file=code)
                 try:
-                    for i in tag:
+                    for i in tag_list:
                         if i != 'unknown':
                             print("  <tag>" + i + "</tag>", file=code)
                 except Exception as error_info:
@@ -1172,7 +1172,7 @@ class MyMAinWindow(QMainWindow, Ui_AVDV):
                 if publisher != 'unknown':
                     print("  <tag>" + '發行:' + publisher + "</tag>", file=code)
                 try:
-                    for i in tag:
+                    for i in tag_list:
                         if i != 'unknown':
                             print("  <genre>" + i + "</genre>", file=code)
                 except Exception as error_info:
@@ -1366,7 +1366,7 @@ class MyMAinWindow(QMainWindow, Ui_AVDV):
 
     # ========================================================================创建输出文件夹
     def creatFolder(self, success_folder, json_data, config):
-        title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, number, cover, website, series = get_info(
+        title, studio, publisher, year, outline, runtime, director, actor_photo, actor, release, tag, tag_list, number, cover, website, series = get_info(
             json_data)
         if len(actor.split(',')) >= 10:  # 演员过多取前五个
             actor = actor.split(',')[0] + ',' + actor.split(',')[1] + ',' + actor.split(',')[2] + '等演员'
@@ -1374,7 +1374,7 @@ class MyMAinWindow(QMainWindow, Ui_AVDV):
         path = folder_name.replace('title', title).replace('studio', studio).replace('year', year).replace('runtime',
                                                                                                            runtime).replace(
             'director', director).replace('actor', actor).replace('release', release).replace('number', number).replace(
-            'series', series).replace('publisher', publisher)  # 生成文件夹名
+            'series', series).replace('publisher', publisher).replace('tag', tag)  # 生成文件夹名
         path = path.replace('--', '-').strip('-')
         if len(path) > 100:  # 文件夹名过长 取标题前70个字符
             self.add_text_main('[-]Error in Length of Path! Cut title!')
