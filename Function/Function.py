@@ -110,6 +110,8 @@ def getNumber(filepath, escape_string):
             file_number = re.search('FC2-\d{5,}', filename).group()
         elif re.search('[a-zA-Z]+-\d+', filename):  # 提取类似mkbd-120番号
             file_number = re.search('\w+-\d+', filename).group()
+        elif re.search('[a-zA-Z]+\d+-\d+', filename):  # 提取类似T28-123番号
+            file_number = re.search('[a-zA-Z]+\d+-\d+', filename).group()
         elif re.search('\d+[a-zA-Z]+-\d+', filename):  # 提取类似259luxu-1111番号
             file_number = re.search('\d+[a-zA-Z]+-\d+', filename).group()
         elif re.search('[a-zA-Z]+-[a-zA-Z]\d+', filename):  # 提取类似mkbd-s120番号
